@@ -13,3 +13,5 @@ Site PHP sans framework, base PostgreSQL : création de compte, connexion, récu
 
 Hébergé sur Render (Dockerfile), base PostgreSQL sur Neon.
 Variables d'environnement : `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`.
+
+Mot de passe oublié : le lien est envoyé par mail avec PHPMailer (dossier `PHPMailer/`).

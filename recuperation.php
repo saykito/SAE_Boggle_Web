@@ -1,9 +1,9 @@
 <?php
 require 'config.php';
+require 'mail.php';
 
-// Étape 1 : l'utilisateur donne son email, on génère un lien de réinitialisation.
-// En vrai on enverrait ce lien par mail.
-// Ici, pas de serveur mail en local, donc on l'affiche directement à l'écran.
+// Étape 1 : l'utilisateur donne son email, on lui envoie un lien par mail.
+// Si le mail ne part pas, on affiche le lien à l'écran.
 
 $message = '';
 $lien = '';
@@ -18,6 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $req = $pdo->prepare('UPDATE utilisateurs SET token_recup = ?, token_expire = ? WHERE id = ?');
         $req->execute([$token, $expire, $user['id']]);
         $lien = 'reinitialisation.php?token=' . $token;
+
+        $site = getenv('SITE_URL') ?: 'http://localhost:8000';
+        $texte = "Bonjour,\n\nPour changer ton mot de passe, clique sur ce lien (valable 1h) :\n$site/$lien";
+        if (envoyerMail(trim($_POST['email']), 'Boggle - mot de passe oublié', $texte)) {
+            $lien = ''; // le mail est parti, on n'affiche plus le lien
+        }
     }
     // Même message dans tous les cas : on ne révèle pas si l'email existe
     $message = 'Si cet email existe, un lien de réinitialisation a été envoyé.';
