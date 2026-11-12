@@ -1,7 +1,20 @@
 # SAE Boggle, partie web
 
 SAE S3 BUT Informatique, IUT de Marne-la-Vallée (2026 - 2027).
-Site PHP sans framework, base PostgreSQL : création de compte, connexion, récupération du mot de passe, liste des parties.
+
+Partie web d'une plateforme de Boggle en ligne. Le projet complet comprend un moteur de jeu en C (génération de grilles, recherche de mots dans un dictionnaire), une base de données et ce site.
+
+## Fonctionnalités
+
+- Création de compte et connexion
+- Mot de passe oublié : lien de réinitialisation envoyé par mail (PHPMailer)
+- Liste des parties et page de partie
+
+## Technologies
+
+- PHP sans framework, PDO
+- PostgreSQL (Neon en production)
+- Docker, déploiement sur Render
 
 ## Lancer en local
 
@@ -13,5 +26,3 @@ Site PHP sans framework, base PostgreSQL : création de compte, connexion, récu
 
 Hébergé sur Render (Dockerfile), base PostgreSQL sur Neon.
 Variables d'environnement : `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`.
-
-Mot de passe oublié : le lien est envoyé par mail avec PHPMailer (dossier `PHPMailer/`).
