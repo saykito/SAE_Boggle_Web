@@ -4,6 +4,8 @@ SAE S3 BUT Informatique, IUT de Marne-la-Vallée (2026 - 2027).
 
 Partie web d'une plateforme de Boggle en ligne. Le projet complet comprend un moteur de jeu en C (génération de grilles, recherche de mots dans un dictionnaire), une base de données et ce site.
 
+Dépôt principal du projet : [saykito/SAE_Boggle](https://github.com/saykito/SAE_Boggle)
+
 ## Fonctionnalités
 
 - Création de compte et connexion
