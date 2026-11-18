@@ -18,11 +18,13 @@ function envoyerMail($dest, $sujet, $texte) {
         $mail->Host = $hote;
         $mail->Port = (int) (getenv('SMTP_PORT') ?: 587);
         $mail->Timeout = 10;
+        if ($mail->Port === 465) {
+            $mail->SMTPSecure = 'ssl'; // le port 465 est chiffré dès la connexion
+        }
         if (getenv('SMTP_USER')) {
             $mail->SMTPAuth = true;
             $mail->Username = getenv('SMTP_USER');
             $mail->Password = getenv('SMTP_PASS');
-            $mail->SMTPSecure = 'tls';
         }
         $mail->CharSet = 'UTF-8';
         $mail->setFrom(getenv('SMTP_FROM') ?: 'noreply@boggle.fr', 'Boggle');

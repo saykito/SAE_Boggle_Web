@@ -8,7 +8,7 @@ require 'mail.php';
 $message = '';
 $lien = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $req = $pdo->prepare('SELECT id FROM utilisateurs WHERE email = ?');
+    $req = $pdo->prepare('SELECT id FROM utilisateurs WHERE LOWER(email) = LOWER(?)');
     $req->execute([trim($_POST['email'])]);
     $user = $req->fetch();
 

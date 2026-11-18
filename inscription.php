@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email  = trim($_POST['email']);
     $mdp    = $_POST['mdp'];
 
-    if (strlen($pseudo) < 3) {
-        $erreur = 'Le pseudo doit faire au moins 3 caractères.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (strlen($pseudo) < 3 || strlen($pseudo) > 30) {
+        $erreur = 'Le pseudo doit faire entre 3 et 30 caractères.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 100) {
         $erreur = 'Email invalide.';
     } elseif (strlen($mdp) < 8) {
         $erreur = 'Le mot de passe doit faire au moins 8 caractères.';
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreur = 'Les deux mots de passe ne correspondent pas.';
     } else {
         // On vérifie que le pseudo / l'email ne sont pas déjà pris
-        $req = $pdo->prepare('SELECT id FROM utilisateurs WHERE pseudo = ? OR email = ?');
+        $req = $pdo->prepare('SELECT id FROM utilisateurs WHERE pseudo = ? OR LOWER(email) = LOWER(?)');
         $req->execute([$pseudo, $email]);
         if ($req->fetch()) {
             $erreur = 'Pseudo ou email déjà utilisé.';
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Créer un compte</h2>
     <?php if ($erreur): ?><p class="erreur"><?= e($erreur) ?></p><?php endif; ?>
     <form method="post">
-        <input type="text" name="pseudo" placeholder="Pseudo" value="<?= e($_POST['pseudo'] ?? '') ?>" required>
-        <input type="email" name="email" placeholder="Email" value="<?= e($_POST['email'] ?? '') ?>" required>
+        <input type="text" name="pseudo" placeholder="Pseudo" maxlength="30" value="<?= e($_POST['pseudo'] ?? '') ?>" required>
+        <input type="email" name="email" placeholder="Email" maxlength="100" value="<?= e($_POST['email'] ?? '') ?>" required>
         <input type="password" name="mdp" placeholder="Mot de passe (8 caractères min.)" required>
         <input type="password" name="mdp2" placeholder="Confirmer le mot de passe" required>
         <button type="submit">S'inscrire</button>

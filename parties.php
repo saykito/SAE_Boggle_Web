@@ -5,7 +5,8 @@ verifierConnexion();
 // Création d'une nouvelle partie
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && trim($_POST['nom']) !== '') {
     $req = $pdo->prepare('INSERT INTO parties (nom, createur_id, date_creation) VALUES (?, ?, ?)');
-    $req->execute([trim($_POST['nom']), $_SESSION['id'], date('Y-m-d H:i:s')]);
+    $nom = mb_substr(trim($_POST['nom']), 0, 50);   // la colonne nom fait 50 caractères max
+    $req->execute([$nom, $_SESSION['id'], date('Y-m-d H:i:s')]);
     header('Location: parties.php');
     exit;
 }
@@ -29,7 +30,7 @@ $parties = $pdo->query(
     <h2>Parties</h2>
 
     <form method="post" class="ligne">
-        <input type="text" name="nom" placeholder="Nom de la nouvelle partie" required>
+        <input type="text" name="nom" placeholder="Nom de la nouvelle partie" maxlength="50" required>
         <button type="submit">Nouvelle partie</button>
     </form>
 

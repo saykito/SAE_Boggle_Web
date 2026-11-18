@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Connexion</h2>
     <?php if ($erreur): ?><p class="erreur"><?= e($erreur) ?></p><?php endif; ?>
     <?php if (isset($_GET['ok'])): ?><p class="succes">C'est bon, tu peux te connecter.</p><?php endif; ?>
-    <form method="post">
+    <form method="post" action="index.php">
         <input type="text" name="pseudo" placeholder="Pseudo" required>
         <input type="password" name="mdp" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
